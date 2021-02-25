@@ -1,0 +1,21 @@
+version: '3'
+ 
+services:
+    
+  fastagi:
+    container_name: fastagi_php    
+    restart: unless-stopped
+    image: georgeosantiago/fastagi_php:7.3
+    hostname: fastagi_php
+    domainname: fastagi_php
+    networks:
+      - default
+      
+    ports:
+      - 4573:4573
+      
+    volumes:
+      - ./phpagi/agiLaunch.sh:/agiLaunch.sh      
+      - ./phpagi/phpagi.conf:/etc/asterisk/phpagi.conf      
+      - ./phpagi/:/var/lib/asterisk/agi-bin/
+      - ./tmp:/var/spool/asterisk/tmp

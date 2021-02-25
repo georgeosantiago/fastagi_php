@@ -1,0 +1,77 @@
+wget http://ufpr.dl.sourceforge.net/project/phpagi/phpagi/2.20/phpagi-2.20.tgz
+tar -xzvf phpagi-2.20.tgz -C /usr/local/fastagi/
+
+Cambios
+/usr/local/fastagi/phpagi-2.20/phpagi.php   linea 1693
+
+#  (original)
+$chpath = is_null($checkpath) ? $_ENV['PATH'] : $checkpath;
+ 
+# (nueva)
+$chpath = (is_null($checkpath) && isset($_ENV['PATH'])) ? $_ENV['PATH'] : $checkpath;
+
+verificar PHP
+which php
+debe ser  /usr/bin/php
+
+
+Configurar Xinetd
+echo 'fastagi   4545/tcp' >> /etc/services
+
+/etc/xinetd.d/fastagi 
+service fastagi
+{
+ socket_type = stream
+ protocol = tcp
+ user = root
+ group = nogroup
+ server = /usr/local/fastagi/phpagi-fastagi.php
+ wait = no
+ protocol = tcp
+ disable = no
+  
+ # Porta de escuta do serviço FastAGI, a mesma adicionada em '/etc/services'
+ port = 4545
+  
+ # Restringe acesso somente na propria maquina (vindo do NGINX)
+ only_from = 127.0.0.1 localhost
+}
+service xinetd restart
+
+Configuracion base:
+exten = 2000,1,AGI(agi://127.0.0.1/sample.php,arg1,arg2)
+
+<?php
+$fastagi->verbose('Parabéns, seu servidor FastAGI está funcionando!!!');
+?>
+
+Asterisk 1.2.X and 1.4.X
+exten => _X.,1,AGI(agi://192.168.2.1:1048/TestAGI?exten=${EXTEN})
+Asterisk 1.6
+exten => _X.,1,AGI(agi://192.168.2.1:1048/TestAGI|${EXTEN}|{VAR2})
+
+************
+Configurando NGINX
+
+user nginx;
+worker_processes 1;
+ 
+error_log /var/log/nginx/error.log warn;
+pid /var/run/nginx.pid;
+ 
+events {
+ worker_connections 1024;
+}
+ 
+stream {
+ 
+ upstream fastagi {
+ server 127.0.0.1:4545;
+ 
+ }
+ 
+ server {
+ listen 4573;
+ proxy_pass fastagi;
+ }
+}
