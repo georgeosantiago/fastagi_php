@@ -1,6 +1,6 @@
 # fastagi_php:7.3
 
-Fastagi server for PHP 7.3
+FastAGI for Asterisk servers in PHP 7.3
 
 ## Running it.
 
