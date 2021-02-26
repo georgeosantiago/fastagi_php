@@ -95,7 +95,9 @@ telnet localhost 4573
 php -q /var/lib/asterisk/agi-bin/phpagi-fastagi.php 2> /dev/null
 ```
 
-## Configure phpagi.conf
+## phpagi.conf
+
+### Configure directory path 
 
 ```text
 [phpagi]
@@ -124,7 +126,9 @@ basedir=/var/lib/asterisk/agi-bin/	; path to script folder
 ;voice=David					; default voice
 ```
 
-## Mount the directories with docker-compose
+## docker-compose.yml 
+
+### Mount the directories with docker-compose
 
 ```text
 version: '3'
