@@ -174,6 +174,7 @@ same => n,Hangup
 ## sample.php
 
 ```php
+<?php
 	// Parametros del PHP FastAGI bootstrap
 	$request = $fastagi->request;
 		
@@ -185,6 +186,5 @@ same => n,Hangup
 	
 	$valor=$fastagi->get_variable("campo1");
 	$fastagi->verbose('->campo1:'.$valor["data"]);	
-
 ?>
 ```
