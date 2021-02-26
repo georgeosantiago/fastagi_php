@@ -70,3 +70,19 @@ service agi
 ```cmd
 telnet localhost 4573
 ```
+
+## How to use this image with PHPAGI (http://phpagi.sourceforge.net/)
+
+```text
+
+├── phpagi
+│   ├── agiLaunch.sh
+│   ├── phpagi-asmanager.php
+│   ├── phpagi.conf
+│   ├── phpagi-fastagi.php
+│   ├── phpagi.php
+│   └── test
+│       └── sample.php
+
+    
+```
